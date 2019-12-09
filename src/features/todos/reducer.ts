@@ -1,6 +1,7 @@
 import { Todo } from 'MyModels';
 import { combineReducers } from 'redux';
 import { createReducer } from 'typesafe-actions';
+
 import { loadTodosAsync, addTodo, removeTodo } from './actions';
 
 export const isLoadingTodos = createReducer(false as boolean)

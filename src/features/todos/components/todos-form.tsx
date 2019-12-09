@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/PlaylistAdd';
 
 const dispatchProps = {
-    addItem: (title: string) => addTodo({ title }),
+    addItem: addTodo,
 };
 
 type Props = {
@@ -28,7 +28,9 @@ class TodosForm extends React.Component<Props, State> {
 
     handleAdd = (event?: React.SyntheticEvent<HTMLElement | HTMLFormElement>) => {
         if (event) { event.preventDefault(); }
-        this.props.addItem(this.state.title);
+        if (this.state.title) {
+            this.props.addItem(this.state.title);
+        }
         this.setState({ title: '' });
     };
 
@@ -37,25 +39,25 @@ class TodosForm extends React.Component<Props, State> {
 
         return (
             <form onSubmit={this.handleAdd}>
-                    <TextField
-                        id="todo-form"
-                        fullWidth
-                        margin="dense"
-                        variant="outlined"
-                        type="text"
-                        label="Your ToDo Task"
-                        value={title}
-                        onChange={this.handleTitleChange}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton onClick={this.handleAdd}>
-                                        <AddIcon />
-                                    </IconButton>
-                                </InputAdornment>
-                            )
-                        }}
-                    />
+                <TextField
+                    id="todo-form"
+                    fullWidth
+                    margin="dense"
+                    variant="outlined"
+                    type="text"
+                    label="Your ToDo Task"
+                    value={title}
+                    onChange={this.handleTitleChange}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={this.handleAdd}>
+                                    <AddIcon />
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
+                />
             </form>
         );
     }

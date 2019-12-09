@@ -9,40 +9,52 @@ import List from '@material-ui/core/List/List';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Typography from '@material-ui/core/Typography/Typography';
-import Home from '@material-ui/icons/Home';
+import MenuIcon from '@material-ui/icons/Menu';
 import Todos from '../features/todos/components/todo-view';
 import withRoot from '../withRoot';
 import { mailFolderListItems } from './list-items';
 import { Theme, createStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+import LogoImage from '../logo_bright.png';
+import { Link } from 'react-router-dom';
+
 const drawerWidth = 240;
 const styles = (theme: Theme) => createStyles({
     root: {
         display: 'flex',
     },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
+    logo: {
+        maxHeight: '40px',
+        margin: '10px 35px 0px 35px'
     },
     drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
+        [theme.breakpoints.up('sm')]: {
+            width: drawerWidth,
+            flexShrink: 0,
+        },
     },
+    appBar: {
+        marginLeft: drawerWidth,
+        [theme.breakpoints.up('sm')]: {
+            width: `calc(100% - ${drawerWidth}px)`,
+        },
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up('sm')]: {
+            display: 'none',
+        },
+    },
+    toolbar: theme.mixins.toolbar,
     drawerPaper: {
         width: drawerWidth,
     },
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
-    },
-    toolbar: theme.mixins.toolbar,
-    navIconHide: {
-        [theme.breakpoints.up('md')]: {
-            display: 'none',
-        }
     }
 });
-
 
 export interface AppState {
     mobileOpen: boolean;
@@ -61,7 +73,11 @@ class App extends React.Component<AppStyled, AppState> {
         const { classes } = this.props;
         const drawer = (
             <div>
-                <div className={classes.toolbar} />
+                <div className={classes.toolbar}>
+                    <Link to="/" title="Go to Application Home page">
+                        <img src={LogoImage} className={classes.logo} alt="Siemens Healthineers logo" />
+                    </Link>
+                </div>
                 <Divider />
                 <List>{mailFolderListItems}</List>
             </div>
@@ -71,14 +87,20 @@ class App extends React.Component<AppStyled, AppState> {
                 <CssBaseline />
                 <AppBar position="fixed" className={classes.appBar}>
                     <Toolbar>
-                        <IconButton color="inherit" aria-label="open drawer" onClick={this.handleDrawerToggle} className={classes.navIconHide}>
-                            <Home />
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="start"
+                            onClick={this.handleDrawerToggle}
+                            className={classes.menuButton}
+                        >
+                            <MenuIcon />
                         </IconButton>
-                        <Typography variant="subtitle1" color="inherit" noWrap={true}>Simple ToDo</Typography>
+                        <Typography variant="h6" noWrap={true}>Simple ToDo</Typography>
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer} aria-label="mailbox folders">
-                    <Hidden mdUp={true}>
+                    <Hidden smUp implementation="css">
                         <Drawer variant="temporary"
                             open={this.state.mobileOpen}
                             onClose={this.handleDrawerToggle}
@@ -87,7 +109,7 @@ class App extends React.Component<AppStyled, AppState> {
                             {drawer}
                         </Drawer>
                     </Hidden>
-                    <Hidden smDown={true} implementation="css">
+                    <Hidden xsDown implementation="css">
                         <Drawer
                             variant="permanent"
                             open={true}

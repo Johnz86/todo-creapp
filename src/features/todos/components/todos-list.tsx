@@ -1,7 +1,6 @@
 import { RootState } from 'typesafe-actions';
 import * as React from 'react';
 import { connect } from 'react-redux';
-
 import * as selectors from '../selectors';
 import * as actions from '../actions';
 import TodoListItem from './todos-list-item';
@@ -15,13 +14,13 @@ const dispatchProps = {
     removeTodo: actions.removeTodo,
 };
 
-type Props = ReturnType<typeof mapStateToProps> & typeof dispatchProps;
+type Props = typeof dispatchProps & ReturnType<typeof mapStateToProps>;
 
-function TodoList({ isLoading, todos = [], removeTodo }: Props) {
+function TodoList(props: Props) {
+    const { isLoading, todos = [], removeTodo } = props;
     if (isLoading) {
         return <ListItem>Loading...</ListItem>;
     }
-
     return (
         <div>
             {todos.map(todo => (

@@ -4,22 +4,7 @@ import * as React from 'react';
 
 // A theme with custom primary and secondary color.
 // It's optional.
-const theme = createMuiTheme({
-	palette: {
-		primary: {
-			contrastText: '#fff',
-			dark: '#363839',
-			light: '#e5e5e5',
-			main: '#727272',
-		},
-		secondary: {
-			contrastText: '#fff',
-			dark: '#a90000',
-			light: '#ff5e50',
-			main: '#e41e26',
-		}
-	}
-});
+const theme = createMuiTheme();
 
 function withRoot(Component: React.ComponentType) {
 	function WithRoot(props: object) {
